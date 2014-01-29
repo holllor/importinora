@@ -6,8 +6,9 @@ package importfpo;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Vector;
+//import java.util.Vector;
 import org.xBaseJ.DBF;
 import org.xBaseJ.fields.CharField;
 import org.xBaseJ.fields.DateField;
@@ -34,7 +35,7 @@ public class getDataDBF {
      * @param file имя файла дбф
      * @return вектор
      */
-    public Vector getDbfField(String path, String file) {
+    public ArrayList getDbfField(String path, String file) {
 
         try {
             //exist  dbf file
@@ -88,7 +89,7 @@ public class getDataDBF {
                         int two = Integer.parseInt(decimalSizeField[i].trim());
                         sizeField[i] = String.valueOf(one + two);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                      //  e.printStackTrace();
                     }
 
                     sizeField[i] = sizeField[i] + "," + decimalSizeField[i];
@@ -102,14 +103,14 @@ public class getDataDBF {
 
             String[] nameFile = file.split("\\.");
             //    System.out.println("nameFile " + nameFile[0]);
-            Vector data = new Vector();
+            ArrayList data = new ArrayList();
             data.add(nameFile);
             data.add(nameField);
             data.add(typeField);
             data.add(sizeField);
             return data;
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return null;
         }
     }
@@ -131,7 +132,7 @@ public class getDataDBF {
      * @param file имя файла
      * @return содержимое файла
      */
-    public Vector getDbfData(String path, String file, String kodFes, String kodRes) {
+    public ArrayList getDbfData(String path, String file, String kodFes, String kodRes) {
         try {
             //exist  dbf file
             DBF dbfFile = new DBF("" + path + "\\" + file + "", "cp866");
@@ -155,10 +156,10 @@ public class getDataDBF {
 
                 }
             }
-            Vector<Vector> data = new Vector<Vector>();
+            ArrayList data = new ArrayList();
             for (int i = 1; i <= dbfFile.getRecordCount(); i++) {
                 dbfFile.read();
-                Vector<String> row = new Vector<String>();
+                ArrayList<String> row = new ArrayList<String>();
                 //перебираются все поля в строке
                 for (int j = 0; j < nameField.length; j++) {
                     //+2....дополнительные поля для кода fes and res
@@ -190,7 +191,7 @@ public class getDataDBF {
                                         Date dat = sdf.parse(val2);
                                         val2 = sdf2.format(dat);
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+                                  //      e.printStackTrace();
                                     }
 
 
@@ -250,7 +251,7 @@ public class getDataDBF {
 
             return data;
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return null;
         }
     }
@@ -259,7 +260,7 @@ public class getDataDBF {
     public static void main(String[] args) throws SQLException {
         //  Vector<String[]> v = new getDataDBF().getDbfData("c:\\fposerv\\fpo\\1\\1", "sobbit.dbf");
         getDataDBF g = new getDataDBF();
-        Vector<Vector<String>> v = g.getDbfData("c:\\FOXPRO\\DBFS\\forms", "form1.dbf", "1", "2");
+        ArrayList<ArrayList<String>> v = g.getDbfData("c:\\FOXPRO\\DBFS\\forms", "form1.dbf", "1", "2");
         for (int i = 320; i < 321; i++) {
             for (int j = 150; j < 151; j++) {
                 System.out.print(v.get(i).get(j) + " ");

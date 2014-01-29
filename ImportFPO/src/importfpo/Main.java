@@ -5,7 +5,8 @@
 package importfpo;
 
 import java.sql.SQLException;
-import java.util.Vector;
+import java.util.ArrayList;
+//import java.util.Vector;
 
 
 /**
@@ -42,11 +43,11 @@ public class Main {
                         System.out.println("PROSHEL " + file[k]);
                         //получение структуры таблицы дбф
                       
-                        Vector<String[]> data = get.getDbfField( path  , file[k]);
+                        ArrayList<String[]> data = get.getDbfField( path  , file[k]);
                         //извлечение данных из таблицы дбф
                       
 
-                        Vector<Vector> value = get.getDbfData( path , file[k], "1", "2");
+                        ArrayList<ArrayList> value = get.getDbfData( path , file[k], "1", "2");
 
                     //создание аналога в оракл
                     if (ct.checkOpenNameTable(data.get(0)[0])) {
@@ -57,7 +58,7 @@ public class Main {
                         ct.setAutoCommit(true);
                         int count = 1;
                         for (int ii = 0; ii < value.size(); ii++) {
-                            Vector row = value.get(ii);
+                            ArrayList row = value.get(ii);
                             
                             ct.insertRow(data.get(0)[0], data.get(1), row);
                             count++;
