@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,10 +29,12 @@ public class CreateTable {
      */
     public void init() {
         try {
-            Class.forName("org.apache.derby.jdbc.ClientDriver"); //вызов драйвера
-            String URL = "jdbc:derby://localhost:1527/rozisk"; //подключение к базе intradb-rsk
-            String user = "root";
-            String psw = "root";
+           // Class.forName("org.apache.derby.jdbc.ClientDriver"); //вызов драйвера
+                Class.forName("org.postgresql.Driver");
+            //String URL = "jdbc:derby://localhost:1527/rozisk"; //подключение к базе intradb-rsk
+                String URL ="jdbc:postgresql://localhost:5432/oracle";
+            String user = "test";
+            String psw = "test";
             connect = DriverManager.getConnection(URL, user, psw);
             System.out.println("init");
 //            Statement statement = con.createStatement();
@@ -50,7 +53,7 @@ public class CreateTable {
 //            con.close();
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+       //     ex.printStackTrace();
         }
 
     }
@@ -203,7 +206,7 @@ public class CreateTable {
      * @param columnValues список значений
      * @throws SQLException проверь конект или что-то не сработало
      */
-    public void insertRow(String tableName, String[] columnName, Vector columnValues) throws SQLException {
+    public void insertRow(String tableName, String[] columnName, ArrayList columnValues) throws SQLException {
         // System.out.println(columnName.length+" "+columnValues.size());
         if (columnName.length == columnValues.size()) {
             String razdelit = ", ";
@@ -245,7 +248,7 @@ public class CreateTable {
         String[] columnType = new String[]{"Character", "Number", "Logical", "Date"};
         String[] columnSize = new String[]{"30", "5", "true", "999"};
      //   String[] values = new String[]{"'red'", "76", "'12.04.2009'", "'T'"};
-        Vector v = new Vector();
+        ArrayList v = new ArrayList();
         v.add("'red'");
         v.add("76");
         v.add("'T'");
